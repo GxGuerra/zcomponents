@@ -20,6 +20,7 @@ class ZEstruturaEmpresa extends StatelessWidget {
   final String header;
   final ZEstruturaEmpresaCubit bloc;
   final bool exibeIconeVoltar;
+  final Widget customDrawer;
 
   ZEstruturaEmpresa({
     @required this.token,
@@ -30,6 +31,7 @@ class ZEstruturaEmpresa extends StatelessWidget {
     this.header = "",
     this.bloc,
     this.exibeIconeVoltar = true,
+    this.customDrawer
   });
 
   final TreeViewTheme _treeViewTheme = TreeViewTheme(
@@ -80,6 +82,7 @@ class ZEstruturaEmpresa extends StatelessWidget {
             title: new Text("ESTRUTURA DE EMPRESA"),
             centerTitle: true,
           ),
+          drawer: validarCustomDrawer(),
           body: new BlocBuilder<ZEstruturaEmpresaCubit,
               ZEstruturaEmpresaCubitModel>(builder: (context, state) {
             Widget widget = new SmartRefresher(
@@ -218,6 +221,14 @@ class ZEstruturaEmpresa extends StatelessWidget {
       return new IconeVoltar(
         context: context,
       );
+    } else {
+      return new Container();
+    }
+  }
+
+  Widget validarCustomDrawer(){
+    if(customDrawer != null){
+      return customDrawer;
     } else {
       return new Container();
     }
