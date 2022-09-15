@@ -9,6 +9,5 @@ class SvgUtils {
       'assets/status-aguardando-validacao.svg';
   static final String ASSETMORE = 'assets/more.svg';
   static final String ASSETLEFTICON = 'assets/leftIcon.svg';
-  static final String LOGOZELLAR = 'assets/zellar-logo.svg';
 
 }
