@@ -218,20 +218,20 @@ class ZEstruturaEmpresa extends StatelessWidget {
               ),
               height: 24,
             ),
-            new Container(
-              padding: EdgeInsets.all(8),
-              height: 50,
-              width: 100,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24),
-                child: SvgPicture.asset(
-                  SvgUtils.LOGOZELLAR,
-                  semanticsLabel: "zellar-logo.svg",
-                  placeholderBuilder: (context) => Icon(Icons.error),
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
+            // new Container(
+            //   padding: EdgeInsets.all(8),
+            //   height: 50,
+            //   width: 100,
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(left: 24),
+            //     child: SvgPicture.asset(
+            //       SvgUtils.LOGOZELLAR,
+            //       semanticsLabel: "zellar-logo.svg",
+            //       placeholderBuilder: (context) => Icon(Icons.error),
+            //       color: Theme.of(context).primaryColor,
+            //     ),
+            //   ),
+            // ),
           ],
         ),
         backgroundColor: Colors.white,
