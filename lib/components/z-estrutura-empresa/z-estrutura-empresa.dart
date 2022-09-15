@@ -200,7 +200,7 @@ class ZEstruturaEmpresa extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 24),
               child: new Text(
-                "CONFIGURAÇÕES",
+                "ESTRUTURA EMPRESA",
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
