@@ -67,263 +67,255 @@ class ZEstruturaEmpresa extends StatelessWidget {
     }
 
     if(kIsWeb){
-      buildWeb(context);
+      return new BlocProvider.value(
+          value: bloc,
+          child: new Scaffold(
+            appBar: montarAppBarWebOuMobile(context),
+            drawer: validarCustomDrawer(),
+            body: new BlocBuilder<ZEstruturaEmpresaCubit,
+                ZEstruturaEmpresaCubitModel>(builder: (context, state) {
+              Widget widget = new SmartRefresher(
+                controller: bloc.refreshController,
+                onRefresh: () {
+                  bloc.refresh(token);
+                },
+                enablePullDown: true,
+                header: new ClassicHeader(
+                  idleText: "Puxe para atualizar",
+                  releaseText: "Solte para atualizar",
+                  refreshingText: "Atualizando",
+                  completeText: "Sua lista está atualizada!",
+                  iconPos: IconPosition.right,
+                ),
+                child: new Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: new TreeView(
+                      controller: bloc.treeViewController,
+                      allowParentSelect: true,
+                      theme: _treeViewTheme,
+                      onNodeTap: (String key) {
+                        var node = bloc.treeViewController.getNode(key);
+
+                        bloc.selecionarNo(node);
+                      },
+                      nodeBuilder: (context, node) => new Container(
+                        padding: const EdgeInsets.all(4.0),
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            new Expanded(
+                              child: new Text(node.label),
+                              flex: 90,
+                            ),
+                            new Expanded(
+                              child: new IconButton(
+                                  icon: new Icon(
+                                    Icons.chevron_right,
+                                    color: MainStyle.APP_THEME,
+                                  ),
+                                  onPressed: () {
+                                    bloc.selecionarNo(node);
+
+                                    if (onNodeSelected != null)
+                                      onNodeSelected(node.data as Nivel);
+                                  }),
+                              flex: 10,
+                            )
+                          ],
+                        ),
+                      )),
+                ),
+              );
+
+              if (state.isLoading)
+                widget = new Center(
+                  child: new ZLoading(),
+                );
+
+              return new Column(
+                children: [
+                  adicionarHeader(),
+                  new Container(
+                    color: Colors.white,
+                    child: new Row(
+                      children: <Widget>[
+                        new Expanded(
+                          flex: 85,
+                          child: new Container(
+                            margin: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                            child: new Container(
+                              margin: EdgeInsets.only(left: 16, right: 2),
+                              decoration: BoxDecoration(
+                                  color: Color(0xfff0f0f0),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(9.0))),
+                              child: new Row(
+                                children: <Widget>[
+                                  new Container(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: new Icon(
+                                        Icons.search,
+                                        color: Color(0xff999999),
+                                      )),
+                                  new Expanded(
+                                      child: new CupertinoTextField(
+                                        placeholderStyle: new TextStyle(
+                                            color: Color(0xff999999), fontSize: 17),
+                                        keyboardType: TextInputType.text,
+                                        controller: bloc.searchTextController,
+                                        onChanged: (value) {
+                                          bloc.filtrarEstruturaEmpresa(value);
+                                        },
+                                        placeholder: "Buscar",
+                                        decoration: new BoxDecoration(
+                                            color: Colors.transparent),
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        new Expanded(
+                            flex: 15,
+                            child: new IconButton(
+                              icon: new Icon(
+                                Icons.filter_list_outlined,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  new Expanded(child: widget)
+                ],
+              );
+            }),
+          ));
     } else {
-      buildApp(context);
+      return new BlocProvider.value(
+          value: bloc,
+          child: new Scaffold(
+            appBar: montarAppBarWebOuMobile(context),
+            body: new BlocBuilder<ZEstruturaEmpresaCubit,
+                ZEstruturaEmpresaCubitModel>(builder: (context, state) {
+              Widget widget = new SmartRefresher(
+                controller: bloc.refreshController,
+                onRefresh: () {
+                  bloc.refresh(token);
+                },
+                enablePullDown: true,
+                header: new ClassicHeader(
+                  idleText: "Puxe para atualizar",
+                  releaseText: "Solte para atualizar",
+                  refreshingText: "Atualizando",
+                  completeText: "Sua lista está atualizada!",
+                  iconPos: IconPosition.right,
+                ),
+                child: new Container(
+                  padding: const EdgeInsets.all(8.0),
+                  child: new TreeView(
+                      controller: bloc.treeViewController,
+                      allowParentSelect: true,
+                      theme: _treeViewTheme,
+                      onNodeTap: (String key) {
+                        var node = bloc.treeViewController.getNode(key);
+
+                        bloc.selecionarNo(node);
+                      },
+                      nodeBuilder: (context, node) => new Container(
+                        padding: const EdgeInsets.all(4.0),
+                        child: new Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            new Expanded(
+                              child: new Text(node.label),
+                              flex: 90,
+                            ),
+                            new Expanded(
+                              child: new IconButton(
+                                  icon: new Icon(
+                                    Icons.chevron_right,
+                                    color: MainStyle.APP_THEME,
+                                  ),
+                                  onPressed: () {
+                                    bloc.selecionarNo(node);
+
+                                    if (onNodeSelected != null)
+                                      onNodeSelected(node.data as Nivel);
+                                  }),
+                              flex: 10,
+                            )
+                          ],
+                        ),
+                      )),
+                ),
+              );
+
+              if (state.isLoading)
+                widget = new Center(
+                  child: new ZLoading(),
+                );
+
+              return new Column(
+                children: [
+                  adicionarHeader(),
+                  new Container(
+                    color: Colors.white,
+                    child: new Row(
+                      children: <Widget>[
+                        new Expanded(
+                          flex: 85,
+                          child: new Container(
+                            margin: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                            child: new Container(
+                              margin: EdgeInsets.only(left: 16, right: 2),
+                              decoration: BoxDecoration(
+                                  color: Color(0xfff0f0f0),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(9.0))),
+                              child: new Row(
+                                children: <Widget>[
+                                  new Container(
+                                      padding: EdgeInsets.only(left: 8.0),
+                                      child: new Icon(
+                                        Icons.search,
+                                        color: Color(0xff999999),
+                                      )),
+                                  new Expanded(
+                                      child: new CupertinoTextField(
+                                        placeholderStyle: new TextStyle(
+                                            color: Color(0xff999999), fontSize: 17),
+                                        keyboardType: TextInputType.text,
+                                        controller: bloc.searchTextController,
+                                        onChanged: (value) {
+                                          bloc.filtrarEstruturaEmpresa(value);
+                                        },
+                                        placeholder: "Buscar",
+                                        decoration: new BoxDecoration(
+                                            color: Colors.transparent),
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        new Expanded(
+                            flex: 15,
+                            child: new IconButton(
+                              icon: new Icon(
+                                Icons.filter_list_outlined,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            )),
+                      ],
+                    ),
+                  ),
+                  new Expanded(child: widget)
+                ],
+              );
+            }),
+          ));
     }
-  }
-
-  Widget buildApp(BuildContext context){
-    return new BlocProvider.value(
-        value: bloc,
-        child: new Scaffold(
-          appBar: montarAppBarWebOuMobile(context),
-          body: new BlocBuilder<ZEstruturaEmpresaCubit,
-              ZEstruturaEmpresaCubitModel>(builder: (context, state) {
-            Widget widget = new SmartRefresher(
-              controller: bloc.refreshController,
-              onRefresh: () {
-                bloc.refresh(token);
-              },
-              enablePullDown: true,
-              header: new ClassicHeader(
-                idleText: "Puxe para atualizar",
-                releaseText: "Solte para atualizar",
-                refreshingText: "Atualizando",
-                completeText: "Sua lista está atualizada!",
-                iconPos: IconPosition.right,
-              ),
-              child: new Container(
-                padding: const EdgeInsets.all(8.0),
-                child: new TreeView(
-                    controller: bloc.treeViewController,
-                    allowParentSelect: true,
-                    theme: _treeViewTheme,
-                    onNodeTap: (String key) {
-                      var node = bloc.treeViewController.getNode(key);
-
-                      bloc.selecionarNo(node);
-                    },
-                    nodeBuilder: (context, node) => new Container(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          new Expanded(
-                            child: new Text(node.label),
-                            flex: 90,
-                          ),
-                          new Expanded(
-                            child: new IconButton(
-                                icon: new Icon(
-                                  Icons.chevron_right,
-                                  color: MainStyle.APP_THEME,
-                                ),
-                                onPressed: () {
-                                  bloc.selecionarNo(node);
-
-                                  if (onNodeSelected != null)
-                                    onNodeSelected(node.data as Nivel);
-                                }),
-                            flex: 10,
-                          )
-                        ],
-                      ),
-                    )),
-              ),
-            );
-
-            if (state.isLoading)
-              widget = new Center(
-                child: new ZLoading(),
-              );
-
-            return new Column(
-              children: [
-                adicionarHeader(),
-                new Container(
-                  color: Colors.white,
-                  child: new Row(
-                    children: <Widget>[
-                      new Expanded(
-                        flex: 85,
-                        child: new Container(
-                          margin: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                          child: new Container(
-                            margin: EdgeInsets.only(left: 16, right: 2),
-                            decoration: BoxDecoration(
-                                color: Color(0xfff0f0f0),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(9.0))),
-                            child: new Row(
-                              children: <Widget>[
-                                new Container(
-                                    padding: EdgeInsets.only(left: 8.0),
-                                    child: new Icon(
-                                      Icons.search,
-                                      color: Color(0xff999999),
-                                    )),
-                                new Expanded(
-                                    child: new CupertinoTextField(
-                                      placeholderStyle: new TextStyle(
-                                          color: Color(0xff999999), fontSize: 17),
-                                      keyboardType: TextInputType.text,
-                                      controller: bloc.searchTextController,
-                                      onChanged: (value) {
-                                        bloc.filtrarEstruturaEmpresa(value);
-                                      },
-                                      placeholder: "Buscar",
-                                      decoration: new BoxDecoration(
-                                          color: Colors.transparent),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      new Expanded(
-                          flex: 15,
-                          child: new IconButton(
-                            icon: new Icon(
-                              Icons.filter_list_outlined,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          )),
-                    ],
-                  ),
-                ),
-                new Expanded(child: widget)
-              ],
-            );
-          }),
-        ));
-  }
-
-  Widget buildWeb(BuildContext context){
-    return new BlocProvider.value(
-        value: bloc,
-        child: new Scaffold(
-          appBar: montarAppBarWebOuMobile(context),
-          drawer: validarCustomDrawer(),
-          body: new BlocBuilder<ZEstruturaEmpresaCubit,
-              ZEstruturaEmpresaCubitModel>(builder: (context, state) {
-            Widget widget = new SmartRefresher(
-              controller: bloc.refreshController,
-              onRefresh: () {
-                bloc.refresh(token);
-              },
-              enablePullDown: true,
-              header: new ClassicHeader(
-                idleText: "Puxe para atualizar",
-                releaseText: "Solte para atualizar",
-                refreshingText: "Atualizando",
-                completeText: "Sua lista está atualizada!",
-                iconPos: IconPosition.right,
-              ),
-              child: new Container(
-                padding: const EdgeInsets.all(8.0),
-                child: new TreeView(
-                    controller: bloc.treeViewController,
-                    allowParentSelect: true,
-                    theme: _treeViewTheme,
-                    onNodeTap: (String key) {
-                      var node = bloc.treeViewController.getNode(key);
-
-                      bloc.selecionarNo(node);
-                    },
-                    nodeBuilder: (context, node) => new Container(
-                      padding: const EdgeInsets.all(4.0),
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          new Expanded(
-                            child: new Text(node.label),
-                            flex: 90,
-                          ),
-                          new Expanded(
-                            child: new IconButton(
-                                icon: new Icon(
-                                  Icons.chevron_right,
-                                  color: MainStyle.APP_THEME,
-                                ),
-                                onPressed: () {
-                                  bloc.selecionarNo(node);
-
-                                  if (onNodeSelected != null)
-                                    onNodeSelected(node.data as Nivel);
-                                }),
-                            flex: 10,
-                          )
-                        ],
-                      ),
-                    )),
-              ),
-            );
-
-            if (state.isLoading)
-              widget = new Center(
-                child: new ZLoading(),
-              );
-
-            return new Column(
-              children: [
-                adicionarHeader(),
-                new Container(
-                  color: Colors.white,
-                  child: new Row(
-                    children: <Widget>[
-                      new Expanded(
-                        flex: 85,
-                        child: new Container(
-                          margin: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                          child: new Container(
-                            margin: EdgeInsets.only(left: 16, right: 2),
-                            decoration: BoxDecoration(
-                                color: Color(0xfff0f0f0),
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(9.0))),
-                            child: new Row(
-                              children: <Widget>[
-                                new Container(
-                                    padding: EdgeInsets.only(left: 8.0),
-                                    child: new Icon(
-                                      Icons.search,
-                                      color: Color(0xff999999),
-                                    )),
-                                new Expanded(
-                                    child: new CupertinoTextField(
-                                      placeholderStyle: new TextStyle(
-                                          color: Color(0xff999999), fontSize: 17),
-                                      keyboardType: TextInputType.text,
-                                      controller: bloc.searchTextController,
-                                      onChanged: (value) {
-                                        bloc.filtrarEstruturaEmpresa(value);
-                                      },
-                                      placeholder: "Buscar",
-                                      decoration: new BoxDecoration(
-                                          color: Colors.transparent),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      new Expanded(
-                          flex: 15,
-                          child: new IconButton(
-                            icon: new Icon(
-                              Icons.filter_list_outlined,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          )),
-                    ],
-                  ),
-                ),
-                new Expanded(child: widget)
-              ],
-            );
-          }),
-        ));
   }
 
   Widget montarAppBarWebOuMobile(BuildContext context) {
