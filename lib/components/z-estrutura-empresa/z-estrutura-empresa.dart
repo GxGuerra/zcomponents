@@ -319,53 +319,53 @@ class ZEstruturaEmpresa extends StatelessWidget {
   }
 
   Widget montarAppBarWebOuMobile(BuildContext context) {
-    if (kIsWeb) {
-      return new AppBar(
-        title: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 24),
-              child: new Text(
-                "ESTRUTURA EMPRESA",
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            new Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  left: BorderSide(
-                    color: Color(0x99999999),
-                    width: 1,
-                  ),
-                ),
-              ),
-              height: 24,
-            ),
-            new Container(
-              padding: EdgeInsets.all(8),
-              height: 50,
-              width: 100,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 24),
-                child: SvgPicture.asset(
-                  SvgUtils.LOGOZELLAR,
-                  semanticsLabel: "zellar-logo.svg",
-                  placeholderBuilder: (context) => Icon(Icons.error),
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Theme.of(context).primaryColor,
-        ),
-      );
-    } else {
+    // if (kIsWeb) {
+    //   return new AppBar(
+    //     title: Row(
+    //       children: [
+    //         Padding(
+    //           padding: const EdgeInsets.only(right: 24),
+    //           child: new Text(
+    //             "ESTRUTURA EMPRESA",
+    //             style: TextStyle(
+    //               color: Theme.of(context).primaryColor,
+    //               fontWeight: FontWeight.bold,
+    //             ),
+    //           ),
+    //         ),
+    //         new Container(
+    //           decoration: BoxDecoration(
+    //             border: Border(
+    //               left: BorderSide(
+    //                 color: Color(0x99999999),
+    //                 width: 1,
+    //               ),
+    //             ),
+    //           ),
+    //           height: 24,
+    //         ),
+    //         new Container(
+    //           padding: EdgeInsets.all(8),
+    //           height: 50,
+    //           width: 100,
+    //           child: Padding(
+    //             padding: const EdgeInsets.only(left: 24),
+    //             child: SvgPicture.asset(
+    //               SvgUtils.LOGOZELLAR,
+    //               semanticsLabel: "zellar-logo.svg",
+    //               placeholderBuilder: (context) => Icon(Icons.error),
+    //               color: Theme.of(context).primaryColor,
+    //             ),
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //     backgroundColor: Colors.white,
+    //     iconTheme: IconThemeData(
+    //       color: Theme.of(context).primaryColor,
+    //     ),
+    //   );
+    // } else {
       new AppBar(
         actions: [
           new IconButton(
@@ -381,7 +381,7 @@ class ZEstruturaEmpresa extends StatelessWidget {
         title: new Text("ESTRUTURA DE EMPRESA"),
         centerTitle: true,
       );
-    }
+    // }
   }
 
   Widget adicionarHeader() {
